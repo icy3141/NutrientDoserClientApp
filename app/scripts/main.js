@@ -18,6 +18,16 @@ const myJs = [
     "uiInit",
     "ui"
 ];
+const myJs = [
+    "Recipe",
+    "CommandType",
+    "CommandData",
+    "socket",
+    "api",
+    "uiTools",
+    "uiInit",
+    "ui"
+];
 
 require.config({
     baseUrl: myCdnPath
