@@ -8,9 +8,7 @@
 
 
 
-
-
-const myCdnPath = "https://cdn.jsdelivr.net/gh/icy3141/NutrientDoserClientApp/app/";
+const myCdnPath = "https://cdn.jsdelivr.net/gh/icy3141/NutrientDoserClientApp@latest/app/";
 
 const myJs = [
     "Recipe",
