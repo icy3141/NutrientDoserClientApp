@@ -6,6 +6,21 @@
 // template:
 // https://cdn.jsdelivr.net/gh/user/repo@version/file
 
+
+
+function initialize() {
+    initUi();
+
+    try {
+        connect();
+    }
+    catch (e) {
+        console.log(e);
+        showDisconnected();
+    }
+}
+
+
 const myCdnPath = "https://cdn.jsdelivr.net/gh/icy3141/NutrientDoserClientApp/app/";
 
 const myJs = [
@@ -18,6 +33,11 @@ const myJs = [
     "uiInit",
     "ui"
 ];
+
+//append .js
+for (let i = 0; i < myJs.length; i++) {
+    myJs[i] += ".js";
+}
 
 require.config({
     baseUrl: myCdnPath
@@ -34,15 +54,3 @@ requirejs(myJs, function (util) {
     //the module value for "helper/util".
     initialize();
 });
-
-function initialize() {
-    initUi();
-
-    try {
-        connect();
-    }
-    catch (e) {
-        console.log(e);
-        showDisconnected();
-    }
-}
