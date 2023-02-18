@@ -27,7 +27,7 @@ for (let i = 0; i < myJs.length; i++) {
 }
 
 require.config({
-    baseUrl: myCdnPath
+    baseUrl: myCdnPath + "scripts/"
     /*paths: {
         "some": "some/v1.0"
     },*/
