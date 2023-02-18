@@ -1,16 +1,39 @@
-﻿
-//let form = document.forms.namedItem("uiForm");
-//let inputElem = form.elements["input1"];
+﻿// Nutrient Doser Client App
+// Main Entry Point
 
-//let promptElem = document.getElementById("prompt");
-//promptElem.innerText = ;
+// jsdeliver CDN
+// https://www.jsdelivr.com/documentation#id-github
+// template:
+// https://cdn.jsdelivr.net/gh/user/repo@version/file
 
+const myCdnPath = "https://cdn.jsdelivr.net/gh/icy3141/NutrientDoserClientApp/app/";
 
+const myJs = [
+    "Recipe",
+    "CommandType",
+    "CommandData",
+    "socket",
+    "api",
+    "uiTools",
+    "uiInit",
+    "ui"
+];
 
+require.config({
+    baseUrl: myCdnPath
+    /*paths: {
+        "some": "some/v1.0"
+    },*/
+    /*waitSeconds: 15*/
+});
 
-
-
-
+requirejs(myJs, function (util) {
+    //This function is called when scripts/helper/util.js is loaded.
+    //If util.js calls define(), then this function is not fired until
+    //util's dependencies have loaded, and the util argument will hold
+    //the module value for "helper/util".
+    initialize();
+});
 
 function initialize() {
     initUi();
