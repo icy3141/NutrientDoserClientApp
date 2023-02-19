@@ -5,8 +5,7 @@ let socketIsOpen = false;
 function disconnect() {
     socket.close();
 }
-function afterConnect()
-{
+function afterConnect() {
     getRecipe();
 }
 
@@ -58,15 +57,18 @@ function connect() {
     socket.onerror = onError;
 }
 
+
+
 function interpretMessage(message) {
     let command = CommandData.parse(message);
     switch (command.Type) {
         case CommandType.Recipe:
-        {
-            let recipe = Recipe.parse(command);
-            currentRecipe = recipe;
-            break;
-        }
+            {
+                let recipeJsonObj = command.Arguments[0];
+                let recipe = Recipe.parse(recipeJsonObj);
+                currentRecipe = recipe;
+                break;
+            }
     }
 
 }

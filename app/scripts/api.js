@@ -38,19 +38,19 @@ function setPump(isOn) {
     let command = new CommandData(CommandType.SetPump, isOn);
     //command.setArguments(isOn);
     let sendStr = command.toString();
-    socket.send(sendStr);
+    command.send();
 }
 
 function pumpAmount(fluidAmount) {
     let command = new CommandData(CommandType.PumpAmount, fluidAmount);
     let sendStr = command.toString();
-    socket.send(sendStr);
+    command.send();
 
 }
 function pumpTime(timeInMs) {
     let command = new CommandData(CommandType.PumpTime, timeInMs);
     let sendStr = command.toString();
-    socket.send(sendStr);
+    command.send(socket);
 
 }
 

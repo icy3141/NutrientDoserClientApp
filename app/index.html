@@ -10,18 +10,20 @@
             data-main="scripts/scriptLoader.js"></script>-->
 
     <script type="text/javascript">
-        let useSpiffs = true;
+        let myLocation = window.location.toString();
+        //let useSpiffs = !(myLocation.includes("file://") || myLocation.includes("localhost"));
+        let useSpiffs = myLocation.includes("192.168.");
         let useCdn = false;
     </script>
 
     <script type="text/javascript" src="scripts/scriptLoader.js"></script>
-    <!--<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/icy3141/NutrientDoserClientApp@latest/app/scripts/scriptLoader.js"></script>-->
+    <script type="text/javascript" src="scriptLoader.js"></script>
+    <!--<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/icy3141/NutrientDoserClientApp@master/app/scripts/scriptLoader.js"></script>-->
 
 </head>
 <body>
     <div id="main">
         <h1>Nutrient Doser</h1>
-
     </div>
 </body>
 </html>

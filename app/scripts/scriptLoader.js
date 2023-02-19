@@ -7,7 +7,7 @@
 // https://cdn.jsdelivr.net/gh/user/repo@version/file
 
 
-const myCdnPath = "https://cdn.jsdelivr.net/gh/icy3141/NutrientDoserClientApp@latest/app/";
+const myCdnPath = "https://cdn.jsdelivr.net/gh/icy3141/NutrientDoserClientApp@master/app/";
 //const myCdnPath = "https://raw.githubusercontent.com/icy3141/NutrientDoserClientApp/main/app/";
 
 const myJs = [
@@ -34,7 +34,8 @@ function addScriptViaDocumentWrite(fileName) {
     else {
         if (!useSpiffs)
             script += "scripts/";
-        script += fileName;
+        else
+            script += fileName;
     }
     script += '"></script>';
 

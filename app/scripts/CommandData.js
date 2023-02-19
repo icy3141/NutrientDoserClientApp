@@ -32,33 +32,23 @@ class CommandData {
     send(webSocket) {
         if (!webSocket)
             webSocket = socket;
+        if (!webSocket) return;
         webSocket.send(this.toString());
     }
 
 
-    /** builds the command object from server message text (space delimited)
-     * @param {string} spaceDelimited
+    /** builds the command object from server message text
+     * @param {string} jsonString
      * @return {CommandData}
      */
     static parse(jsonString) {
-        /**@type {string[]}*/
-        
+        let jsonObj = JSON.parse(jsonString);
+        let command = new CommandData(jsonObj.Type);
+        command.setArgumentList(jsonObj.Arguments);
         return command;
     }
 
     toString() {
         return JSON.stringify(this);
-    }
-
-
-    prepareString(rawStr) {
-        /**@type {String}*/
-        preppedStr = rawStr;
-        //add escape character to inner quotes
-        //preppedStr = preppedStr.replace("\"", "\\" + "\"");
-
-        //surround with quotes
-        //preppedStr = `"${preppedStr}\"`;
-        return preppedStr;
     }
 }
