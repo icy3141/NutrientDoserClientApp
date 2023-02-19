@@ -6,10 +6,8 @@
 // template:
 // https://cdn.jsdelivr.net/gh/user/repo@version/file
 
-let useCdn = false;
 
-
-const myCdnPath1 = "https://cdn.jsdelivr.net/gh/icy3141/NutrientDoserClientApp@latest/app/";
+const myCdnPath = "https://cdn.jsdelivr.net/gh/icy3141/NutrientDoserClientApp@latest/app/";
 //const myCdnPath = "https://raw.githubusercontent.com/icy3141/NutrientDoserClientApp/main/app/";
 
 const myJs = [
@@ -29,40 +27,10 @@ for (let i = 0; i < myJs.length; i++) {
     myJs[i] += ".js";
 }
 
-let loadCounter = 0;
-
-
-//function addScript(fileName) {
-//    var script = document.createElement('script');
-//    script.type = 'text/javascript';
-//    script.onload += handleLoad;
-//    script.onreadystatechange = handleReadyStateChange;
-//    script.onerror += (oError) => {
-//        throw new URIError(`The script ${oError.target.src} didn't load correctly.`);
-//    };
-//    script.src = myCdnPath1 + "scripts/" + fileName;
-//    document.head.appendChild(script);
-//}
-//function handleLoad() {
-//    if (typeof showRecipe != 'undefined') {
-//        initialize();
-//    }
-//}
-
-//function handleReadyStateChange(evt) {
-//    var state;
-
-//    if (typeof showRecipe != 'undefined') {
-//        state = evt.readyState;
-//        if (state === "complete") {
-//            handleLoad();
-//        }
-//    }
-//}
 function addScriptViaDocumentWrite(fileName) {
     var script = '<script type="text/javascript" src="';
     if (useCdn)
-        script += myCdnPath1 + "scripts/" + fileName;
+        script += myCdnPath + "scripts/" + fileName;
     else {
         if (!useSpiffs)
             script += "scripts/";
