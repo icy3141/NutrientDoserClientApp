@@ -1,6 +1,6 @@
 ﻿
 /* References to Specific UI elements */
-let pnlMainMenu;
+
 
 let pnlCalibrateStart;
 let txtCalibrateDuration, btnCalibrateStart;
@@ -24,13 +24,22 @@ let mainDiv;
 let panels = [];
 let currentPanel;
 
+
+function makeConnectionIndicator() {
+
+}
+
+/** Create the UI
+ */
 function initUi() {
 
+
+    mainDiv = document.getElementById("main");
 
     /* begin connection indicator */
     connectionIndicatorDiv = document.createElement("div");
     connectionIndicatorDiv.className = "connection-indicator-container";
-    main.appendChild(connectionIndicatorDiv);
+    mainDiv.appendChild(connectionIndicatorDiv);
 
     connectionIndicator = document.createElement("div");
     connectionIndicatorDiv.appendChild(connectionIndicator);

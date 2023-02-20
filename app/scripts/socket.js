@@ -33,19 +33,6 @@ function connect() {
 
         message = evt.data;
         interpretMessage(message);
-        //// There are two types of messages:
-        //// 1. a chat participant message itself
-        //// 2. a message with a number of connected chat participants
-        //var message = evt.data;
-
-        //if (message.startsWith("log:")) {
-        //    message = message.slice("log:".length);
-        //    log.innerHTML = '<li class = "message">' +
-        //        message + "</li>" + log.innerHTML;
-        //} else if (message.startsWith("connected:")) {
-        //    message = message.slice("connected:".length);
-        //    connected.innerHTML = message;
-        //}
     }
 
     var wsUri = "ws://" + location.hostname + ":80";

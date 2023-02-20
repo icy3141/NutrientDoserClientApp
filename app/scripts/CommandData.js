@@ -36,7 +36,6 @@ class CommandData {
         webSocket.send(this.toString());
     }
 
-
     /** builds the command object from server message text
      * @param {string} jsonString
      * @return {CommandData}
@@ -47,7 +46,9 @@ class CommandData {
         command.setArgumentList(jsonObj.Arguments);
         return command;
     }
-
+    /** 
+     * 
+     */
     toString() {
         return JSON.stringify(this);
     }

@@ -8,8 +8,8 @@
 
 
 const myCdnPath = "https://cdn.jsdelivr.net/gh/icy3141/NutrientDoserClientApp@master/app/";
-//const myCdnPath = "https://raw.githubusercontent.com/icy3141/NutrientDoserClientApp/main/app/";
 
+// list of js file to load
 const myJs = [
     "Recipe",
     "CommandType",
@@ -19,6 +19,8 @@ const myJs = [
     "uiTools",
     "uiInit",
     "ui",
+    "uiComponents/menuMain",
+    "uiComponents/menuMixRecipe",
     "main"
 ];
 
@@ -27,30 +29,52 @@ for (let i = 0; i < myJs.length; i++) {
     myJs[i] += ".js";
 }
 
-function addScriptViaDocumentWrite(fileName) {
-    var script = '<script type="text/javascript" src="';
+/** Changes a filepath based on platform.
+ * @param {string} fileName The filename to change.
+ * @returns {string} The changed path.
+ * */
+function modifyFileNameForPlatform(fileName) {
+
     if (useCdn)
         script += myCdnPath + "scripts/" + fileName;
     else {
-        if (!useSpiffs)
+        ////disabled because this is being handled on the http server now
+        //if (useSpiffs) {
+        //    //remove folders if on SPIFFS
+        //    let nameParts = fileName.split("/");
+        //    if (nameParts.length > 0)
+        //        fileName = nameParts.pop();
+        //}
+        //else {
             script += "scripts/";
-        else
-            script += fileName;
+        //}
+        script += fileName;
     }
-    script += '"></script>';
+}
 
+/** Adds a script tag to the html page.
+ * @param {string} fileName
+ * */
+function addScriptViaDocumentWrite(fileName) {
+    var script = '<script type="text/javascript" src="';
+    script += fileName;
+    script += '"></script>';
     document.writeln(script);
 }
 
-
+/** checks whether all scripts are loaded yet
+ * @returns {boolean}
+ * */
 function areAllScriptsLoaded() {
-    //return loadCounter == myJs.length;
-    return typeof initialize != 'undefined';
+    return initialize instanceof Function ||
+        typeof initialize != 'undefined';
 }
 
+//start loading all the scripts
 for (let i = 0; i < myJs.length; i++) {
-    addScriptViaDocumentWrite(myJs[i]);
+    addScriptViaDocumentWrite(modifyFileNameForPlatform(myJs[i]));
 }
+//wait for scripts to complete, then initialize the page
 const loaderTimer = setInterval(() => {
     if (areAllScriptsLoaded()) {
         clearInterval(loaderTimer);
