@@ -14,7 +14,6 @@ function textboxValueAsInt(textbox) {
     }
     return Number.NaN;
 }
-
 function textboxValueAsFloat(textbox) {
     try {
         return Number.parseFloat(textbox.value);
@@ -173,11 +172,27 @@ function makeBasicPanel(titleText, panelId, promptText) {
 
     let prompt = document.createElement("p");
     prompt.className = "prompt";
-    prompt.innerHTML = promptText;
+    if (promptText)
+        prompt.innerHTML = promptText;
     container.appendChild(prompt);
 
     return container;
 }
+
+function makeMessagePanel(messageTitle, messageText)
+{
+    let container = makeBasicPanel(messageTitle, "alert-panel", messageText);
+
+    row = makeRow();
+    container.appendChild(row);
+    btn = makeMainMenuButton();
+    row.appendChild(btn);
+
+    return container;
+}
+
+
+
 
 /*function showMenu(container) {
     

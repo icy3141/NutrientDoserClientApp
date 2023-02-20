@@ -1,7 +1,8 @@
 ﻿class Recipe{
 
-    /**@type {string}*/
-    currentFluid = "";
+    /** deserialized FluidAmount has Unit and Value
+     * @type {any}*/
+    currentFluid;
 
     currentIndex = 0;
 
@@ -53,6 +54,7 @@
         return recipe;
     }
 
+    /** Prepares the object for use after being deserialized. */
     unpackFromJson() {
         this.Fluids = new Map();
         for (let fluid of this.FluidList) {
@@ -61,6 +63,7 @@
         this.FluidList = null;
     }
 
+    /** Convert the object to JSON string. */
     toJson() {
         return JSON.stringify(this);
     }

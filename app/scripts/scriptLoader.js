@@ -1,12 +1,11 @@
 ﻿// Nutrient Doser Client App
 // Main Entry Point
 
+
 // jsdeliver CDN
 // https://www.jsdelivr.com/documentation#id-github
 // template:
 // https://cdn.jsdelivr.net/gh/user/repo@version/file
-
-
 const myCdnPath = "https://cdn.jsdelivr.net/gh/icy3141/NutrientDoserClientApp@master/app/";
 
 // list of js file to load
@@ -24,9 +23,14 @@ const myJs = [
     "main"
 ];
 
-//append .js
-for (let i = 0; i < myJs.length; i++) {
-    myJs[i] += ".js";
+/** Adds ".js" after each file name in an array
+ * @param {string[]} jsFileNames
+ * */
+function appendDotJs(jsFileNames) {
+    //append .js
+    for (let i = 0; i < jsFileNames.length; i++) {
+        jsFileNames[i] += ".js";
+    }
 }
 
 /** Changes a filepath based on platform.
@@ -34,22 +38,10 @@ for (let i = 0; i < myJs.length; i++) {
  * @returns {string} The changed path.
  * */
 function modifyFileNameForPlatform(fileName) {
-
-    if (useCdn)
-        script += myCdnPath + "scripts/" + fileName;
-    else {
-        ////disabled because this is being handled on the http server now
-        //if (useSpiffs) {
-        //    //remove folders if on SPIFFS
-        //    let nameParts = fileName.split("/");
-        //    if (nameParts.length > 0)
-        //        fileName = nameParts.pop();
-        //}
-        //else {
-            script += "scripts/";
-        //}
-        script += fileName;
+    if (useCdn) {
+        return myCdnPath + "scripts/" + fileName;
     }
+    return "scripts/" + fileName;
 }
 
 /** Adds a script tag to the html page.
@@ -62,6 +54,16 @@ function addScriptViaDocumentWrite(fileName) {
     document.writeln(script);
 }
 
+/** Adds a script tag to the html page for each filename in an array.
+ * @param {string[]} fileNames
+ * */
+function addAllScripts(fileNames) {
+
+    for (let i = 0; i < myJs.length; i++) {
+        addScriptViaDocumentWrite(modifyFileNameForPlatform(myJs[i]));
+    }
+}
+
 /** checks whether all scripts are loaded yet
  * @returns {boolean}
  * */
@@ -70,11 +72,12 @@ function areAllScriptsLoaded() {
         typeof initialize != 'undefined';
 }
 
-//start loading all the scripts
-for (let i = 0; i < myJs.length; i++) {
-    addScriptViaDocumentWrite(modifyFileNameForPlatform(myJs[i]));
-}
-//wait for scripts to complete, then initialize the page
+// Begin Entry Point
+
+// start loading all the scripts
+appendDotJs(myJs);
+addAllScripts(myJs);
+// wait for scripts to complete, then initialize the page
 const loaderTimer = setInterval(() => {
     if (areAllScriptsLoaded()) {
         clearInterval(loaderTimer);
