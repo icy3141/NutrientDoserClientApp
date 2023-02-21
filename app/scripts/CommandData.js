@@ -33,7 +33,14 @@ class CommandData {
         if (!webSocket)
             webSocket = socket;
         if (!webSocket) return;
-        webSocket.send(this.toString());
+        let jsonStr = this.toString();
+        try {
+            webSocket.send(jsonStr);
+            console.log("sent: \n" + jsonStr);
+        }
+        catch (e) {
+            console.log(e);
+        }
     }
 
     /** builds the command object from server message text

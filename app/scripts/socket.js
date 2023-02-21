@@ -15,12 +15,8 @@ function connect() {
     showConnecting();
 
     function onOpen(evt) {
-        waitForPing(() => {
-            socketIsOpen = true;
-            showConnected();
-            afterConnect();
-        })
-        setTimeout(afterConnect, 100);
+        alert("WebSocket.onOpen!");
+        //socketIsOpen = true;
     }
     function onClose(evt) {
         socketIsOpen = false;
@@ -37,8 +33,12 @@ function connect() {
         message = evt.data;
         interpretMessage(message);
     }
-
-    var wsUri = "ws://" + location.hostname + ":80";
+    let host;
+    if (location.hostname.includes("192.168"))
+        host = location.hostname;
+    else
+        host = "192.168.2.154";
+    var wsUri = "ws://" + host + ":80";
     socket = new WebSocket(wsUri);
     socket.binaryType = "blob";
     socket.onopen += onOpen;
@@ -60,7 +60,7 @@ let onServerMessage = new Map();
 function handleCustomMessageEvent(command) {
     if (onServerMessage.has(command.Type)) {
         let functionsForType = onServerMessage.get(command.Type);
-        let functionIterator = functionsForType.values;
+        let functionIterator = [...functionsForType.values()];
         for (let func of functionIterator) {
             //pass the recieved command to the callback in case it needs it
             func(command);
@@ -74,8 +74,8 @@ function handleCustomMessageEvent(command) {
  * */
 function attachOnMessage(commandType, uniqueName, callbackFunction) {
     let functionsForType;
-    if (onServerMessage.has(command.Type)) {
-        functionsForType = onServerMessage.get(command.Type);
+    if (onServerMessage.has(commandType)) {
+        functionsForType = onServerMessage.get(commandType);
         functionsForType.set(uniqueName, callbackFunction);
     }
     else {
@@ -84,9 +84,13 @@ function attachOnMessage(commandType, uniqueName, callbackFunction) {
         onServerMessage.set(commandType, functionsForType);
     }
 }
+/** Removes an onMessage event for a certain command.
+ * @param {number} commandType The command type to watch for.
+ * @param {string} uniqueName A unique name to key to the callback.
+ * */
 function detachOnMessage(commandType, uniqueName) {
-    if (onServerMessage.has(command.Type)) {
-        functionsForType = onServerMessage.get(command.Type);
+    if (onServerMessage.has(commandType)) {
+        functionsForType = onServerMessage.get(commandType);
         if (functionsForType.has(uniqueName)) {
             functionsForType.delete(uniqueName);
         }
@@ -110,44 +114,70 @@ function interpretMessage(message) {
 
 }
 
-async function waitForPing(doOnResponse) {
+function pingAndWaitThenDo(doOnResponse) {
 
     let wasPingRespondedTo = false;
+    let timeoutMs = 250;
+    let waitIntervalMs = 50;
+    let elapsedMs = 0;
+    let attempts = 0;
+    let attemptLimit = 5;
 
-    new CommandData(CommandType.Ping).send();
-
-    attachOnMessage(CommandType.Response, "handshakeWaiter",
+    attachOnMessage(CommandType.Response, "handshakePingWaiter",
         (command) => {
             if (command.Arguments[0] == CommandType.Ping) {
                 wasPingRespondedTo = true;
-                detachOnMessage(CommandType.Ping, "handshakeWaiter");
-                if (doOnResponse)
+                detachOnMessage(CommandType.Response, "handshakePingWaiter");
+                if (doOnResponse) {
                     doOnResponse();
+                }
             }
-        }
-    );
-    function recursiveWaiter()
-    {
-        if (!wasPingRespondedTo)
-            setTimeout(recursiveWaiter, 100);
-    }
+        });
 
+    let pingCommand = new CommandData(CommandType.Ping);
+    pingCommand.send();
+
+    function recursiveWaiter() {
+        if (wasPingRespondedTo) {
+            return; // stop looping
+        }
+        elapsedMs += waitIntervalMs;
+        if (elapsedMs >= timeoutMs) {
+            elapsed = 0;
+            attempts++;
+            pingCommand.send();
+            console.log()
+        }
+        if (attempts < attemptLimit)
+            setTimeout(recursiveWaiter, waitIntervalMs);
+    }
+    recursiveWaiter();
 }
 
 
 // Make the function wait until the connection is made...
-function waitForSocketConnection(socket, callback) {
+function waitForSocketConnection() {
     setTimeout(
-        function () {
-            if (socket.readyState === 1) {
-                console.log("Connection is made")
-                if (callback != null) {
-                    callback();
-                }
-            } else {
-                console.log("wait for connection...")
-                waitForSocketConnection(socket, callback);
-            }
+        () => {
+            pingAndWaitThenDo(() => {
+                socketIsOpen = true;
+                showConnected();
+                afterConnect();
+            });
+        }, 300);
 
-        }, 5); // wait 5 milisecond for the connection...
+    //setTimeout(
+    //    function () {
+    //        if (socketIsOpen) {
+
+    //            pingAndWaitThenDo(() => {
+    //                socketIsOpen = true;
+    //                showConnected();
+    //                afterConnect();
+    //            });
+    //        } else {
+    //            console.log("wait for connection...")
+    //            waitForSocketConnection();
+    //        }
+    //    }, 20); // wait 20 ms for the connection...
 }

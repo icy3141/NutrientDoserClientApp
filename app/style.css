@@ -38,6 +38,11 @@ body {
 
 @media screen and (max-width: 1000px) {
 
+    #main {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.5em 0.5em;
+    }
 
 }
 #main {
@@ -70,6 +75,11 @@ body {
 
 input[type=number]::-webkit-inner-spin-button {
     -webkit-appearance: none;
+}
+
+select option{
+    text-align: left;
+    padding: 0.2em;
 }
 
 .connection-indicator-container {
@@ -234,7 +244,6 @@ input:checked + .toggle-switch-slider {
     justify-items: center;
     align-items: center;
 }
-
     #main-menu-panel .button-row {
         place-self: center;
         display: flex;
@@ -246,3 +255,16 @@ input:checked + .toggle-switch-slider {
     #main-menu-panel .button-row button {
 /*        align-self: center;*/
     }
+
+.recipe-display-panel {
+    display: grid;
+    grid-template-columns: 4fr 2fr;
+/*    gap: 0.5em 0.5em;*/
+}
+.recipe-fluid-cell{
+    text-align: left;
+    
+}
+.recipe-amount-cell {
+    text-align: right;
+}

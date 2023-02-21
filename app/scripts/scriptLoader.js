@@ -15,11 +15,12 @@ const myJs = [
     "CommandData",
     "socket",
     "api",
-    "uiTools",
-    "uiInit",
-    "ui",
+    "uiComponents/uiTools",
+    "uiComponents/uiInit",
+    "uiComponents/ui",
     "uiComponents/menuMain",
     "uiComponents/menuMixRecipe",
+    "uiComponents/menuCalibrate",
     "main"
 ];
 
@@ -68,8 +69,7 @@ function addAllScripts(fileNames) {
  * @returns {boolean}
  * */
 function areAllScriptsLoaded() {
-    return initialize instanceof Function ||
-        typeof initialize != 'undefined';
+    return typeof initialize != 'undefined';
 }
 
 // Begin Entry Point

@@ -12,9 +12,9 @@ const CommandType =
     /// </summary>
     Ping: 1,
     /// <summary>
-    /// response to a ping
+    /// response to a command
     /// </summary>
-    PingResponse: 2,
+    Response: 2,
     /// <summary>
     /// stop doing something
     /// </summary>
@@ -22,7 +22,7 @@ const CommandType =
     /// <summary>
     /// reset the device
     /// </summary>
-    Reset: 3,
+    Reset: 4,
 
     /*reserve up to 19 for pump functions*/
 

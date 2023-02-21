@@ -10,8 +10,6 @@ function menuMain() {
     pnlMainMenu =
         panel = makeBasicPanel("Main Menu", "main-menu-panel",
             "Select an option:");
-    main.appendChild(panel);
-    panels.push(panel);
 
     row = makeRow();
     panel.appendChild(row);

@@ -5,6 +5,28 @@ function disableButtonIf(button, condition) {
     button.disabled = condition();
 }
 
+/**
+ * @param {number} someNumber a number to round
+ * @param {number} decimalPlaces number of digits to preserve after dot
+ * @param {boolean} padZeros whether to make up any lack of decimal places with zeroes
+ * @returns {string}*/
+function formatDecimal(someNumber, decimalPlaces, padZeros) {
+
+    if (!("" + someNumber).includes("."))
+        return ("" + someNumber);
+    let multiplied = someNumber * (10 * decimalPlaces);
+    let rounded = Math.round(multiplied);
+    let divided = rounded / (10 * decimalPlaces);
+    let roundedStr = "" + divided;
+    //let indexOfDot = roundedStr.indexOf(".");
+
+    //if (indexOfDot - decimalPlaces < 0)
+    //    return roundedStr;
+
+    //roundedStr = roundedStr.substring(0, indexOfDot - decimalPlaces);
+    return roundedStr;
+}
+
 function textboxValueAsInt(textbox) {
     try {
         return Number.parseInt(textbox.value);
@@ -66,10 +88,15 @@ function loadMenu(panelOrCreateFn) {
     //hideAllMenus();
     //showMenu(container);
     let panel = panelOrCreateFn;
-    if (panelOrCreateFn instanceof Function)
-        panel = panelOrCreateFn();
     if (currentPanel)
         currentPanel.remove();
+    try {
+        if (panelOrCreateFn instanceof Function)
+            panel = panelOrCreateFn();
+    }
+    catch (err) {
+        console.error(err);
+    }
     currentPanel = panel;
     mainDiv.appendChild(panel);
     return panel;

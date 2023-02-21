@@ -14,7 +14,6 @@ function menuCalibrateStart() {
     panelId = "calibrate-start-panel";
     pnlCalibrateStart =
         panel = makeBasicPanel(panelTitle, panelId, promptText);
-    panels.push(panel);
 
     updateButton = () => {
         const textbox = txtCalibrateDuration;
@@ -30,7 +29,7 @@ function menuCalibrateStart() {
 
     let fluidList = ["No Fluid Data"];
     if (currentRecipe) {
-        fluidList = currentRecipe.getFluids();
+        fluidList = currentRecipe.getFluidNames();
         fluidList.unshift("Select a Fluid")
     }
     label = makeLabel("calibrate-fluid", "Fluid to measure: ");
@@ -60,8 +59,6 @@ function menuCalibrateEnd() {
     panelId = "calibrate-end-panel";
     pnlCalibrateEnd =
         panel = makeBasicPanel(panelTitle, panelId, promptText);
-    main.appendChild(panel);
-    panels.push(panel);
 
     updateButton = () => {
         const textbox = txtCalibrateAmount;

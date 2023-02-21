@@ -91,12 +91,19 @@ function menuPumpControl() {
 
 
 
-function showRecipe(recipe) {
-    let map = new Map();
-    let pnlRecipe = document.createElement("div");
+function showRecipe(recipe, panel) {
 
-    pnlMixRecipe.appendChild(pnlRecipe);
-    recipe.forEach((val, key, m) => {
-        pnlRecipe.innerHTML += `${key}: ${val} mL/gal<br />`;
+    recipe.Fluids.forEach((val, key, m) => {
+        let cell;
+
+        cell = document.createElement("div");
+        cell.className = "recipe-fluid-cell";
+        cell.innerText = `${key}`;
+        panel.appendChild(cell);
+
+        cell = document.createElement("div");
+        cell.className = "recipe-amount-cell";
+        cell.innerText = `${formatDecimal(val.Value, 2)} mL/gal`;
+        panel.appendChild(cell);
     });
 }

@@ -30,15 +30,24 @@
     }
 
     hasCurrent() {
-        return this.currentIndex < this.size;
+        return this.currentIndex < this.Fluids.size;
     }
 
     hasNext() {
         return this.currentIndex < this.Fluids.size - 1;
     }
 
-    getFluids() {
+    getFluidNames() {
         return [...this.Fluids.keys()];
+    }
+
+    getFluids() {
+        return [...this.Fluids.values()];
+    }
+
+    /** */
+    getCurrentFullAmount() {
+        return this.currentFluid.Value * recipeTargetVolume;
     }
 
     /**parse recipe data from incoming json

@@ -23,13 +23,9 @@ function startRecipe(mixTargetVolume) {
 function readyFluid() {
     if (errorOnNoRecipe())
         return;
-    if (currentRecipe && currentRecipe.currentFluid) {
-        let amount = currentRecipe.currentFluid.Value;
-        pumpAmount();
-        loadMenu(menuPumpFluid);
-    }
-    else
-        loadMenu(makeMessagePanel("No Recipe Found"));
+    let amount = currentRecipe.currentFluid.Value;
+    pumpAmount(amount);
+    loadMenu(menuPumpFluid);
 
 }
 /** end of phase 3 */

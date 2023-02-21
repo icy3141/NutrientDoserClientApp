@@ -14,8 +14,6 @@ function menuMixRecipe() {
     panelId = "mix-recipe-panel";
     pnlMixRecipe =
         panel = makeBasicPanel(panelTitle, panelId, promptText);
-    main.appendChild(panel);
-    panels.push(panel);
 
 
     row = makeRow();
@@ -31,6 +29,11 @@ function menuMixRecipe() {
     field = makeNumField("mix-target-volume", "Mix for ", " gallons of water", updateButton);
     txtMixTargetVolume = getInputFromLabel(field);
     row.appendChild(field);
+
+    let pnlRecipeDisplay =
+    row = makeRow();
+    panel.appendChild(row);
+    row.classList.add("recipe-display-panel");
 
     row = makeRow();
     panel.appendChild(row);
@@ -49,7 +52,7 @@ function menuMixRecipe() {
     if (currentRecipe) {
         promptText = "Follow the prompts to measure each amount for the recipe.";
         setPrompt(panel, promptText);
-        showRecipe(currentRecipe);
+        showRecipe(currentRecipe, pnlRecipeDisplay);
     }
 
     return panel;
@@ -68,8 +71,6 @@ function menuPrepareHose() {
     panelId = "prepare-hose-panel";
     pnlPrepareHose =
         panel = makeBasicPanel(panelTitle, panelId, promptText);
-    main.appendChild(panel);
-    panels.push(panel);
 
 
     row = makeRow();
@@ -95,7 +96,7 @@ function menuPrepareHose() {
         promptText = "";
         promptText += `Mixing for ${recipeTargetVolume} gallons of water.`;
         promptText += `<br />`;
-        promptText += `Please put the pump intake hose into the bottle of ${currentRecipe.currentFluid}, then press ready.`;
+        promptText += `Please put the pump intake hose into the bottle of ${currentRecipe.currentFluid.Name}, then press ready.`;
         setPrompt(panel, promptText);
     }
 
@@ -116,8 +117,6 @@ function menuPumpFluid() {
     panelId = "pump-fluid-panel";
     pnlPumpFluid =
         panel = makeBasicPanel(panelTitle, panelId, promptText);
-    main.appendChild(panel);
-    panels.push(panel);
 
 
     row = makeRow();
@@ -147,7 +146,7 @@ function menuPumpFluid() {
         promptText = "";
         promptText += `Mixing for ${recipeTargetVolume} gallons of water.`;
         promptText += `<br />`;
-        promptText += `Pumping ${currentRecipe.get(currentRecipe.currentFluid)} mL of ${currentRecipe.currentFluid}...`;
+        promptText += `Pumping ${formatDecimal(currentRecipe.getCurrentFullAmount(), 2)} mL of ${currentRecipe.currentFluid.Name}...`;
         setPrompt(panel, promptText);
     }
 
