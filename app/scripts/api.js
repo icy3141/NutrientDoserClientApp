@@ -7,9 +7,15 @@ let currentRecipe;
 
 function calibrateStart() {
     loadMenu(menuCalibrateEnd);
+    let command = new CommandData(CommandType.PumpCalibrateStart, fluidAmount);
+    let sendStr = command.toString();
+    command.send();
 }
 function calibrateEnd() {
     loadMenu(menuMain);
+    let command = new CommandData(CommandType.PumpCalibrateActualVolume, fluidAmount);
+    let sendStr = command.toString();
+    command.send();
 }
 
 function startRecipe(mixTargetVolume) {

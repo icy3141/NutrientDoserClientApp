@@ -39,13 +39,14 @@ function menuCalibrateStart() {
 
     row = makeRow();
     panel.appendChild(row);
+	
+    btn = makeMainMenuButton();
+    row.appendChild(btn);
 
     btn = makeButton("Start Pump", "calibrate-start-btn", calibrateStart);
     row.appendChild(btnCalibrateStart = btn);
     updateButton();
 
-    btn = makeMainMenuButton();
-    row.appendChild(btn);
     /* end panel */
 
     return panel;

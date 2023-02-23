@@ -1,5 +1,8 @@
 ﻿
 
+let pnlMixRecipe;
+let btnStartRecipe, txtMixTargetVolume;
+
 /** Phase 1 of mix recipe sequence */
 function menuMixRecipe() {
 

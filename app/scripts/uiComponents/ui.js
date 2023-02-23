@@ -22,6 +22,11 @@ function showConnected() {
 }
 
 
+let pnlPumpControl, btnTogglePump;
+let txtPumpTime, btnPumpTime;
+let txtPumpAmount;
+
+
 /* Go To Menu Functions */
 
 
@@ -54,9 +59,10 @@ function menuPumpControl() {
     panel.appendChild(row);
 
     field = makeNumField("pump-amount", "Pump volume of ", " mL");
+    txtPumpAmount = getInputFromLabel(field);
     row.appendChild(field);
 
-    btn = makeButton("Go", "pump-amount-btn", () => setPump(false));
+    btn = makeButton("Go", "pump-amount-btn", () => pumpTime({Value: numberFromTextbox(txtPumpAmount), Name: "", Unit: 1});
     row.appendChild(btn);
 
     row = makeRow();

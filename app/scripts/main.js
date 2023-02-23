@@ -1,8 +1,6 @@
 ﻿
-
 function initialize() {
     initUi();
-
     try {
         connect();
     }
