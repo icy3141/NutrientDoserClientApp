@@ -35,16 +35,6 @@ body {
     background-color: #eef;
 }
 
-
-@media screen and (max-width: 1000px) {
-
-    #main {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 0.5em 0.5em;
-    }
-
-}
 #main {
     display: grid;
     grid-template-columns: 
@@ -267,4 +257,16 @@ input:checked + .toggle-switch-slider {
 }
 .recipe-amount-cell {
     text-align: right;
+}
+
+
+
+@media screen and (max-width: 1000px) {
+
+    #main {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.5em 0.5em;
+    }
+
 }

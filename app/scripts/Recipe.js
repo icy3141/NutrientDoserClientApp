@@ -1,7 +1,29 @@
-﻿class Recipe{
+﻿class FluidAmount{
+	/**
+	 * @type {string}
+	 */
+	Name = "";
+	/**
+	 * @type {number}
+	 */
+	Value = 0;
+	/**
+	 * @type {number}
+	 */
+	Unit = 1;
+
+	constructor(value, unit = 1, name = "")
+	{
+		this.Name = name;
+		this.Value = value;
+		this.Unit = unit;
+	}
+}
+
+class Recipe{
 
     /** deserialized FluidAmount has Unit and Value
-     * @type {any}*/
+     * @type {FluidAmount}*/
     currentFluid;
 
     currentIndex = 0;

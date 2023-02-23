@@ -51,7 +51,11 @@ function numberFromTextbox(textbox) {
         return textboxValueAsFloat(textbox);
     return textboxValueAsInt(textbox);
 }
-
+/**@param {HTMLSelectElement} dropdown*/
+function valueFromSelectMenu(dropdown)
+{
+	return dropdown.options[dropdown.selectedIndex].value;
+}
 function isTextboxEmpty(textbox) {
     return textbox.value == "";
 }
@@ -206,7 +210,7 @@ function makeBasicPanel(titleText, panelId, promptText) {
     return container;
 }
 
-function makeMessagePanel(messageTitle, messageText)
+function makeMessagePanel(messageTitle, messageText = "", extraButton)
 {
     let container = makeBasicPanel(messageTitle, "alert-panel", messageText);
 
@@ -214,6 +218,10 @@ function makeMessagePanel(messageTitle, messageText)
     container.appendChild(row);
     btn = makeMainMenuButton();
     row.appendChild(btn);
+	
+	if(extraButton != undefined)
+    	row.appendChild(extraButton);
+
 
     return container;
 }

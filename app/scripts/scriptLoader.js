@@ -50,18 +50,29 @@ function modifyFileNameForPlatform(fileName) {
  * */
 function addScriptViaDocumentWrite(fileName) {
     var script = '<script type="text/javascript" src="';
-    script += fileName;
+    script += modifyFileNameForPlatform(fileName);
     script += '"></script>';
     document.writeln(script);
+}
+function addScriptViaDOM(fileName) {
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = modifyFileNameForPlatform(fileName);
+    script.onload += () => {
+        loadCounter++;
+        alert("loaded " + fileName);
+    }
+    document.head.appendChild(script);
 }
 
 /** Adds a script tag to the html page for each filename in an array.
  * @param {string[]} fileNames
  * */
 function addAllScripts(fileNames) {
-
     for (let i = 0; i < myJs.length; i++) {
-        addScriptViaDocumentWrite(modifyFileNameForPlatform(myJs[i]));
+        //addScriptViaDocumentWrite(modifyFileNameForPlatform(myJs[i]));
+        
+        addScriptViaDOM(myJs[i]);
     }
 }
 

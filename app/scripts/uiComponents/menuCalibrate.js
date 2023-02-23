@@ -43,7 +43,11 @@ function menuCalibrateStart() {
     btn = makeMainMenuButton();
     row.appendChild(btn);
 
-    btn = makeButton("Start Pump", "calibrate-start-btn", calibrateStart);
+    btn = makeButton("Start Pump", "calibrate-start-btn", ()=>{
+
+		calibrateStart(valueFromSelectMenu(dropdown),
+		 calibrateDuration = numberFromTextbox(txtCalibrateDuration));
+	});
     row.appendChild(btnCalibrateStart = btn);
     updateButton();
 
@@ -73,13 +77,15 @@ function menuCalibrateEnd() {
     row = makeRow();
     panel.appendChild(row);
 
-    btnCalibrateEnd =
-        btn = makeButton("Confirm", "calibrate-confirm-btn", calibrateEnd);
-    row.appendChild(btn);
-    updateButton();
-
     btn = makeMainMenuButton();
     row.appendChild(btn);
+
+    btnCalibrateEnd =
+        btn = makeButton("Confirm", "calibrate-confirm-btn", ()=>{
+			calibrateSubmitActual(new FluidAmount(numberFromTextbox(txtCalibrateAmount)));
+		});
+    row.appendChild(btn);
+    updateButton();
     /* end panel */
 
     return panel;
