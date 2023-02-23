@@ -218,7 +218,7 @@ function makeMessagePanel(messageTitle, messageText = "", extraButton)
     container.appendChild(row);
     btn = makeMainMenuButton();
     row.appendChild(btn);
-	
+
 	if(extraButton != undefined)
     	row.appendChild(extraButton);
 
@@ -249,3 +249,5 @@ function hideAllMenus() {
     }
 }*/
 
+
+loadCounter++;

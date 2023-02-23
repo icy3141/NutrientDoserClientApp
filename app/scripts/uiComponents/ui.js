@@ -114,3 +114,6 @@ function showRecipe(recipe, panel) {
 		panel.appendChild(cell);
 	});
 }
+
+
+loadCounter++;

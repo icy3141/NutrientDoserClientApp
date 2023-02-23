@@ -191,3 +191,5 @@ function waitForSocketConnection() {
 	//        }
 	//    }, 20); // wait 20 ms for the connection...
 }
+
+loadCounter++;

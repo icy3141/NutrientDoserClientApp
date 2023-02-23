@@ -155,3 +155,5 @@ function menuPumpFluid() {
 
     return panel;
 }
+
+loadCounter++;

@@ -118,3 +118,6 @@ function getRecipe() {
 	let request = new CommandData(CommandType.RecipeRequest);
 	request.send();
 }
+
+
+loadCounter++;

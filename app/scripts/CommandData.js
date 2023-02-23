@@ -60,3 +60,6 @@ class CommandData {
         return JSON.stringify(this);
     }
 }
+
+
+loadCounter++;

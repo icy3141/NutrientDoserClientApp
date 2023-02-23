@@ -90,3 +90,5 @@ function menuCalibrateEnd() {
 
     return panel;
 }
+
+loadCounter++;

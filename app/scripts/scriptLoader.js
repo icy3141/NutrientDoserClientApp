@@ -1,6 +1,6 @@
 ﻿// Nutrient Doser Client App
 // Main Entry Point
-
+let loadCounter = 0;
 
 // jsdeliver CDN
 // https://www.jsdelivr.com/documentation#id-github
@@ -59,7 +59,6 @@ function addScriptViaDOM(fileName) {
     script.type = 'text/javascript';
     script.src = modifyFileNameForPlatform(fileName);
     script.onload += () => {
-        loadCounter++;
         alert("loaded " + fileName);
     }
     document.head.appendChild(script);
@@ -80,7 +79,8 @@ function addAllScripts(fileNames) {
  * @returns {boolean}
  * */
 function areAllScriptsLoaded() {
-    return typeof initialize != 'undefined';
+    return typeof initialize != 'undefined' &&
+		loadCounter == myJs.length;
 }
 
 // Begin Entry Point

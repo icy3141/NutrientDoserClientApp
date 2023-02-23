@@ -48,3 +48,6 @@ function initUi() {
 
     loadMenu(menuMain);
 }
+
+
+loadCounter++;

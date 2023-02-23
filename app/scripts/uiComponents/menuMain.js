@@ -22,7 +22,22 @@ function menuMain() {
 
     btn = makePageLinkButton("Mix Recipe", "mix-recipe-btn", menuMixRecipe);
     row.appendChild(btn);
+    btn = makeButton("Mix Recipe", "config-print-btn", printConfig);
+    row.appendChild(btn);
     /* end panel */
 
     return panel;
 }
+
+printConfig()
+{
+	attachOnMessage(CommandType.Response, "configPrint", (command) =>
+	{
+		if(command.Arguments[1] == CommandType.ConfigData)
+		document.write(command.toString());
+	});
+	new Command(CommandType.ConfigData).send();
+}
+
+
+loadCounter++;

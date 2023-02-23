@@ -9,3 +9,6 @@ function initialize() {
         showDisconnected();
     }
 }
+
+
+loadCounter++;

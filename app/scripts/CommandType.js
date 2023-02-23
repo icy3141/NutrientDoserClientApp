@@ -23,6 +23,7 @@ CommandType = {
 	/// reset the device
 	/// </summary>
 	Reset : 4,
+	ConfigData: 5,
 
 	/*reserve up to 19 for pump functions*/
 
@@ -67,3 +68,6 @@ CommandType = {
 
 
 }
+
+
+loadCounter++;
