@@ -22,21 +22,23 @@ function menuMain() {
 
     btn = makePageLinkButton("Mix Recipe", "mix-recipe-btn", menuMixRecipe);
     row.appendChild(btn);
-    btn = makeButton("Mix Recipe", "config-print-btn", printConfig);
+
+    btn = makeButton("Print Config", "config-print-btn", printConfig);
     row.appendChild(btn);
     /* end panel */
 
     return panel;
 }
 
-printConfig()
+function printConfig()
 {
 	attachOnMessage(CommandType.Response, "configPrint", (command) =>
 	{
-		if(command.Arguments[1] == CommandType.ConfigData)
-		document.write(command.toString());
+		if(command.Arguments[0] == CommandType.ConfigData)
+			mainDiv.innerHTML += JSON.stringify(command.Arguments[1]);
+		detachOnMessage(CommandType.Response, "configPrint");
 	});
-	new Command(CommandType.ConfigData).send();
+	new CommandData(CommandType.ConfigData).send();
 }
 
 
