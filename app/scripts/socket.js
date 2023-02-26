@@ -158,8 +158,13 @@ function pingAndWaitThenDo(doOnResponse) {
 		}
 		if (attempts < attemptLimit)
 			setTimeout(recursiveWaiter, waitIntervalMs);
-		else
-			showDisconnected();
+		else{
+			//give 500ms for a response, otherwise show disconnected
+			setTimeout(() => {
+				if(!socketIsOpen)
+					showDisconnected();
+			}, 500);
+		}
 	}
 	recursiveWaiter();
 }

@@ -192,6 +192,17 @@ function makeMainMenuButton() {
     return makePageLinkButton("Main Menu", "main-menu-btn", menuMain);
 }
 
+function makeFluidMenu()
+{
+	let fluidList = ["No Fluid Data"];
+	if (currentRecipe) {
+		fluidList = currentRecipe.getFluidNames();
+		fluidList.unshift("Select a Fluid")
+	}
+	let dropdown = makeDropdown(fluidList);
+	return dropdown;
+}
+
 function makeBasicPanel(titleText, panelId, promptText) {
     let container = document.createElement("div");
     container.id = panelId;
