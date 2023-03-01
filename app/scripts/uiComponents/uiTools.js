@@ -177,6 +177,7 @@ function makeLabel(id, text) {
     return label;
 }
 
+
 /** creates a select element and fills it with options
  * @param {string[]} options
  * */
@@ -190,6 +191,18 @@ function makeDropdown(options) {
 
 function makeMainMenuButton() {
     return makePageLinkButton("Main Menu", "main-menu-btn", menuMain);
+}
+function makeUnitMenu()
+{
+	let fluidList = [];// = ["No Units"];
+
+	fluidList = [...Object.values()];
+	for (let i = 0; i < fluidList.length; i++) {
+		fluidList[i] = getUnitAbbreviation(fluidList[i]);
+	}
+	// fluidList.unshift("Select a Fluid")
+	let dropdown = makeDropdown(fluidList);
+	return dropdown;
 }
 
 function makeFluidMenu()

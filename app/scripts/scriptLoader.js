@@ -11,6 +11,7 @@ const myCdnPath = "https://cdn.jsdelivr.net/gh/icy3141/NutrientDoserClientApp@ma
 // list of js file to load
 const myJs = [
     "Recipe",
+    "FluidUnit",
     "CommandType",
     "CommandData",
     "socket",

@@ -198,10 +198,6 @@ input, button {
         transition: .2s;
     }
 
-.toggle-switch:hover .toggle-switch-slider:before {
-    /*    box-shadow: 0px 0px 0.5em 0px #bbc inset;*/
-    /*    transition: 0s;*/
-}
 
 input:checked + .toggle-switch-slider {
     /*on color*/
@@ -242,9 +238,9 @@ input:checked + .toggle-switch-slider {
 /*        align-items: center;*/
         align-items: stretch;
     }
-    #main-menu-panel .button-row button {
+    /* #main-menu-panel .button-row button { */
 /*        align-self: center;*/
-    }
+    /* } */
 
 .recipe-display-panel {
     display: grid;
