@@ -29,6 +29,7 @@ let txtPumpAmount;
 
 /* Go To Menu Functions */
 
+let drpPumpControlVolumeUnit;
 
 function menuPumpControl() {
 
@@ -58,12 +59,19 @@ function menuPumpControl() {
 	row = makeRow();
 	panel.appendChild(row);
 
-	field = makeNumField("pump-amount", "Pump volume of ", " mL");
+	field = makeNumField("pump-amount", "Pump volume of ");
 	txtPumpAmount = getInputFromLabel(field);
 	row.appendChild(field);
 
+	drpPumpControlVolumeUnit = dropdown = makeVolumeUnitMenu(FluidUnit.Milliliters);
+	row.appendChild(dropdown);
+
 	btn = makeButton("Go", "pump-amount-btn",
-		() => pumpAmount({ Value: numberFromTextbox(txtPumpAmount), Name: "", Unit: 1 }));
+		() => pumpAmount(new FluidAmount(
+			numberFromTextbox(txtPumpAmount),
+			valueFromSelectMenu(drpPumpControlVolumeUnit)
+		))
+	);
 	row.appendChild(btn);
 
 	row = makeRow();

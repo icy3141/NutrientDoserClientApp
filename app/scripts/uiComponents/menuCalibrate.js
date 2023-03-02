@@ -104,7 +104,7 @@ let txtFluidWeight;
 let txtFluidWeightVolume;
 let drpFluidName;
 let drpWeightUnit;
-let drpVolumeUnit;
+let drpWeightRatioVolumeUnit;
 
 function menuEnterWeightData() {
 	let panelId, panelTitle, promptText;
@@ -139,7 +139,7 @@ function menuEnterWeightData() {
 	txtFluidWeightVolume = getInputFromLabel(field);
 	row.appendChild(field);
 	
-	drpVolumeUnit = dropdown = makeVolumeUnitMenu(FluidUnit.Milliliters);
+	drpWeightRatioVolumeUnit = dropdown = makeVolumeUnitMenu(FluidUnit.Milliliters);
 	row.appendChild(dropdown);
 
 	row = makeRow();
@@ -156,7 +156,7 @@ function menuEnterWeightData() {
 		);
 		let volumeAmount = new FluidAmount(
 			numberFromTextbox(txtFluidWeightVolume),
-			getUnitFromAbbreviation(valueFromSelectMenu(drpVolumeUnit)),
+			getUnitFromAbbreviation(valueFromSelectMenu(drpWeightRatioVolumeUnit)),
 			valueFromSelectMenu(drpFluidName)
 		);
 

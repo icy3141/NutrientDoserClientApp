@@ -41,6 +41,9 @@ function menuMixRecipe() {
     row = makeRow();
     panel.appendChild(row);
 
+    btn = makeMainMenuButton();
+    row.appendChild(btn);
+	
     btnStartRecipe = btn =
         makeButton("Begin", "start-recipe-btn",
             () => startRecipe(numberFromTextbox(txtMixTargetVolume))
@@ -48,8 +51,6 @@ function menuMixRecipe() {
     row.appendChild(btn);
     updateButton();
 
-    btn = makeMainMenuButton();
-    row.appendChild(btn);
     /* end panel */
 
     if (currentRecipe) {
