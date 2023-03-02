@@ -59,9 +59,9 @@ function addScriptViaDOM(fileName) {
     var script = document.createElement('script');
     script.type = 'text/javascript';
     script.src = modifyFileNameForPlatform(fileName);
-    script.onload += () => {
-        alert("loaded " + fileName);
-    }
+    // script.onload += () => {
+    //     alert("loaded " + fileName);
+    // }
     document.head.appendChild(script);
 }
 
@@ -84,15 +84,26 @@ function areAllScriptsLoaded() {
 		loadCounter == myJs.length;
 }
 
+function log(message)
+{
+	document.getElementById("console").innerText= "\n" + message;
+	console.log(message);
+}
+
 // Begin Entry Point
 
 // start loading all the scripts
 appendDotJs(myJs);
 addAllScripts(myJs);
+let lastLoadCounter = 0;
 // wait for scripts to complete, then initialize the page
 const loaderTimer = setInterval(() => {
+	if(loadCounter > lastLoadCounter)
+		log(`Loaded Scripts: ${loadCounter} / ${myJs.length}`);
     if (areAllScriptsLoaded()) {
+		document.getElementById("console").style.display = "none";
         clearInterval(loaderTimer);
         initialize();
     }
+	lastLoadCounter = loadCounter;
 }, 50);

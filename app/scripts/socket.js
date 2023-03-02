@@ -16,6 +16,7 @@ function connect() {
 
 	function onOpen(evt) {
 		alert("WebSocket.onOpen!");
+		console.log("WebSocket.onOpen!");
 		//socketIsOpen = true;
 	}
 	function onClose(evt) {
@@ -33,16 +34,16 @@ function connect() {
 			afterConnect();
 		}
 
-		message = evt.data;
+		message = evt.data.toString();
 		console.log("received WebSockets command:\n" + message);
 		interpretMessage(message);
 	}
 	let host;
 	if (location.hostname.includes("192.168"))
 		host = location.hostname;
-	else
-		host = "192.168.2.195"; 
-		// host = "192.168.2.154";
+	else//for when hosting files locally, set specific ip of server
+		// host = "192.168.2.195"; 
+		host = "192.168.2.154";
 	var wsUri = "ws://" + host + ":80";
 	socket = new WebSocket(wsUri);
 	socket.binaryType = "blob";

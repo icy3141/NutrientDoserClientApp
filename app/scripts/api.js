@@ -10,11 +10,15 @@ let currentRecipe;
 
 /**
  * ui action of recording weight
- * @param {FluidAmount} fluidRate 
+ * @param {FluidAmount} weightAmount 
+ * @param {FluidAmount} volumeAmount 
  */
-function recordFluidWeight(fluidRate)
+function recordFluidWeight(weightAmount, volumeAmount)
 {
-	let command = new CommandData(CommandType.RecordFluidWeight, fluidRate);
+	let weightRatio = new FluidAmount(weightAmount.Value / volumeAmount.Value, weightAmount.Unit, weightAmount.Name);
+
+	
+	let command = new CommandData(CommandType.RecordFluidWeight, weightRatio);
 	command.send();
 
 	loadMenu(
@@ -25,11 +29,13 @@ function recordFluidWeight(fluidRate)
 
 	attachOnMessage(CommandType.Response, "waitForFluidWeightSave", (response) =>
 	{
-		if(response.getArg(0) != CommandType.RecordFluidWeight) return false;
+		if(response.getArg(0) != CommandType.RecordFluidWeight){
+			return false;
+		}
 		loadMenu(
 			makeMessagePanel(
 				`Fluid weight recorded.`,
-				`${fluidRate.Name}: ${fluidRate.Value} ${getUnitAbbreviation(fluidRate.Unit)} per ${getUnitAbbreviation(fluidRate.RateUnit)}`
+				`${weightRatio.Name}: ${weightRatio.Value} ${getUnitAbbreviation(weightRatio.Unit)} per ${getUnitAbbreviation(weightRatio.RateUnit)}`
 			)
 		);
 		return true;

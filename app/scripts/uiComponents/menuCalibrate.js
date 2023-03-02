@@ -101,6 +101,7 @@ function menuCalibrateEnd() {
 }
 
 let txtFluidWeight;
+let txtFluidWeightVolume;
 let drpFluidName;
 let drpWeightUnit;
 let drpVolumeUnit;
@@ -127,14 +128,18 @@ function menuEnterWeightData() {
 	row = makeRow();
 	panel.appendChild(row);
 
-	field = makeNumField("calibrate-amount", "Amount measured:");
+	field = makeNumField("weigh-amount", "Amount measured:");
 	txtFluidWeight = getInputFromLabel(field);
 	row.appendChild(field);
 
-	drpWeightUnit = dropdown = makeWeightUnitMenu(FluidUnit.Grams);
+	drpWeightUnit = dropdown = makeWeightUnitMenu(FluidUnit.Milligrams);
 	row.appendChild(dropdown);
-	row.append(" per ");
-	drpVolumeUnit = dropdown = makeVolumeUnitMenu(FluidUnit.Cups);
+
+	field = makeNumField("weigh-volume", " per ", "", null, 1);
+	txtFluidWeightVolume = getInputFromLabel(field);
+	row.appendChild(field);
+	
+	drpVolumeUnit = dropdown = makeVolumeUnitMenu(FluidUnit.Milliliters);
 	row.appendChild(dropdown);
 
 	row = makeRow();
@@ -143,15 +148,19 @@ function menuEnterWeightData() {
 	btn = makeMainMenuButton();
 	row.appendChild(btn);
 
-	btn = makeButton("Enter Data", "calibrate-start-btn", () => {
-		let myRate = new FluidAmount(
+	btn = makeButton("Enter Data", "enter-weight-btn", () => {
+		let weightAmount = new FluidAmount(
 			numberFromTextbox(txtFluidWeight),
 			getUnitFromAbbreviation(valueFromSelectMenu(drpWeightUnit)),
 			valueFromSelectMenu(drpFluidName)
 		);
-		myRate.RateUnit = getUnitFromAbbreviation(valueFromSelectMenu(drpVolumeUnit));
+		let volumeAmount = new FluidAmount(
+			numberFromTextbox(txtFluidWeightVolume),
+			getUnitFromAbbreviation(valueFromSelectMenu(drpVolumeUnit)),
+			valueFromSelectMenu(drpFluidName)
+		);
 
-		recordFluidWeight(myRate);
+		recordFluidWeight(weightAmount, volumeAmount);
 	});
 	row.appendChild(btn);
 
