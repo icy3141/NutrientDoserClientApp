@@ -22,7 +22,7 @@ const FluidUnit =
 	Kilograms: 52
 
 }
-function isWeightUnit() {
+function isWeightUnit(unit) {
 	switch (unit) {
 		//Weight
 		case FluidUnit.Grams: return true;
@@ -46,6 +46,33 @@ function isVolumeUnit(unit) {
 		case FluidUnit.Teaspoons: return true;
 		case FluidUnit.Tablespoons: return true;
 		default: return false;
+	}
+}
+function getUnitFromAbbreviation(unitStr)
+{
+	switch (unitStr) {
+		//Weight
+		case "g": return FluidUnit.Grams;
+		case "mg": return FluidUnit.Milligrams;
+		case "kg": return FluidUnit.Kilograms;
+
+		//Metric
+		case "L": return FluidUnit.Liters;
+		case "mL": return FluidUnit.Milliliters;
+
+		//Imperial
+		case FluidUnit.Gallons: return "gal";
+		case FluidUnit.Quarts: return "qt";
+		case FluidUnit.Cups: return "C";
+		case "gal": return FluidUnit.Gallons;
+		case "qt": return FluidUnit.Quarts;
+		case "C": return FluidUnit.Cups;
+
+		//Spoons
+		case "tsp": return FluidUnit.Teaspoons;
+		case "Tbsp": return FluidUnit.Tablespoons;
+
+		default: return FluidUnit.None;
 	}
 }
 function getUnitAbbreviation(unit) {

@@ -8,6 +8,34 @@ let calibrateDuration = 1;
 /** @type {Recipe}*/
 let currentRecipe;
 
+/**
+ * ui action of recording weight
+ * @param {FluidAmount} fluidRate 
+ */
+function recordFluidWeight(fluidRate)
+{
+	let command = new CommandData(CommandType.RecordFluidWeight, fluidRate);
+	command.send();
+
+	loadMenu(
+		makeMessagePanel(
+			`Saving Fluid Weight...`,
+		)
+	);
+
+	attachOnMessage(CommandType.Response, "waitForFluidWeightSave", (response) =>
+	{
+		if(response.getArg(0) != CommandType.RecordFluidWeight) return false;
+		loadMenu(
+			makeMessagePanel(
+				`Fluid weight recorded.`,
+				`${fluidRate.Name}: ${fluidRate.Value} ${getUnitAbbreviation(fluidRate.Unit)} per ${getUnitAbbreviation(fluidRate.RateUnit)}`
+			)
+		);
+		return true;
+	}, true);
+}
+
 function calibrateStart(fluidName, durationSec) {
 	calibrateFluidName = fluidName;
 	calibrateDuration = durationSec;
@@ -27,16 +55,24 @@ function calibrateEnd() {
 	//CommandType.PumpCalibrateEnd
 	loadMenu(menuCalibrateEnd);
 }
-function calibrateSubmitActual(fluidAmountActual) {
+/**
+ * 
+ * @param {number} amount 
+ * @param {number} unit 
+ */
+function calibrateSubmitActual(amount, unit) {
+
+	let actualFluidAmount = new FluidAmount(amount, unit, calibrateFluidName);
+
 	loadMenu(
 		makeMessagePanel(
 			`Calibration Finalized: ${calibrateFluidName}`,
-			`The calculated flow rate is ${fluidAmountActual.Value / calibrateDuration} mL/sec`
+			`The calculated flow rate is ${amount / calibrateDuration} ${getUnitAbbreviation(unit)}/sec`
 		)
 	);
-	fluidAmountActual.Name = calibrateFluidName;
-	let command = new CommandData(CommandType.PumpCalibrateActualVolume,
-		calibrateFluidName, calibrateDuration, fluidAmountActual);
+
+	let command = new CommandData(CommandType.PumpCalibrateActualAmount,
+		actualFluidAmount, calibrateDuration);
 	let sendStr = command.toString();
 	command.send();
 }

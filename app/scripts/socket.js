@@ -41,7 +41,8 @@ function connect() {
 	if (location.hostname.includes("192.168"))
 		host = location.hostname;
 	else
-		host = "192.168.2.154";
+		host = "192.168.2.195"; 
+		// host = "192.168.2.154";
 	var wsUri = "ws://" + host + ":80";
 	socket = new WebSocket(wsUri);
 	socket.binaryType = "blob";
@@ -75,9 +76,21 @@ function handleCustomMessageEvent(command) {
  * @param {number} commandType The command type to watch for.
  * @param {string} uniqueName A unique name to key to the callback.
  * @param {Function} callbackFunction A callback function to incoke when the given command is detected.
+ * @param {boolean} detatchAfterOneTrue Whether to auto detach event after callback returns true once.
  * */
-function attachOnMessage(commandType, uniqueName, callbackFunction) {
+function attachOnMessage(commandType, uniqueName, callbackFunction, detatchAfterOneTrue = false) {
 	let functionsForType;
+	if(detatchAfterOneTrue)
+	{
+		const innerCallback = callbackFunction;
+		callbackFunction = (command) =>
+		{
+			if (innerCallback) {
+				if(innerCallback(command))
+					detachOnMessage(commandType, uniqueName);
+			}
+		};
+	}
 	if (onServerMessage.has(commandType)) {
 		functionsForType = onServerMessage.get(commandType);
 		functionsForType.set(uniqueName, callbackFunction);

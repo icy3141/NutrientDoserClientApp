@@ -134,12 +134,14 @@ input, button {
 }
 
     input[type="number"] {
-        min-width: 2em;
+        min-width: 1em;
         max-width: 3em;
         border-top: none;
         border-left: none;
         border-right: none;
         background: none;
+		padding:0px;
+		margin: 0px 0.3em;
     }
 
         input[type="number"]:focus {
@@ -152,8 +154,8 @@ input, button {
     display: inline-block;
     /*    width: 60px;
     height: 34px;*/
-    width: 3.2em;
-    height: 1.6em;
+    width: 3.0em;
+    height: 1.5em;
     margin: 0.2em 0.5em;
     border: 0.1em #225 solid;
     padding: 0.2em;
@@ -223,6 +225,10 @@ input:checked + .toggle-switch-slider {
     display: flex;
     flex-direction: column;
 }
+.button-row {
+	padding: 0.2em;
+
+}
 
 #main-menu-panel {
     display: flex;
@@ -237,6 +243,7 @@ input:checked + .toggle-switch-slider {
         width: 50%;
 /*        align-items: center;*/
         align-items: stretch;
+		padding: 0.2em;
     }
     /* #main-menu-panel .button-row button { */
 /*        align-self: center;*/

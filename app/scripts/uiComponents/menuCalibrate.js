@@ -13,6 +13,10 @@ function menuCalibrateStart() {
 	pnlCalibrateStart =
 		panel = makeBasicPanel(panelTitle, panelId, promptText);
 
+
+		row = makeRow();
+		panel.appendChild(row);
+
 	updateButton = () => {
 		const textbox = txtCalibrateDuration;
 		const button = btnCalibrateStart;
@@ -20,7 +24,7 @@ function menuCalibrateStart() {
 	};
 	field = makeNumField("calibrate-duration", "Calibrate for ", " seconds", updateButton, "10");
 	txtCalibrateDuration = getInputFromLabel(field);
-	panel.appendChild(field);
+	row.appendChild(field);
 
 	row = makeRow();
 	panel.appendChild(row);
@@ -49,6 +53,8 @@ function menuCalibrateStart() {
 	return panel;
 }
 
+let drpCalibrateUnit;
+
 function menuCalibrateEnd() {
 
 	let panelId, panelTitle, promptText;
@@ -57,19 +63,25 @@ function menuCalibrateEnd() {
 
 	/* begin panel */
 	panelTitle = "End Pump Calibration";
-	promptText = "After the pump stops, enter the number of milliliters measured:";
+	promptText = "After the pump stops, enter the amount measured:";
 	panelId = "calibrate-end-panel";
 	pnlCalibrateEnd =
 		panel = makeBasicPanel(panelTitle, panelId, promptText);
+
+	row = makeRow();
+	panel.appendChild(row);
 
 	updateButton = () => {
 		const textbox = txtCalibrateAmount;
 		const button = btnCalibrateEnd;
 		disableButtonIf(button, () => !isTextboxInRange(textbox, 0));
 	};
-	field = makeNumField("calibrate-amount", "Measured ", " mL", updateButton);
+	field = makeNumField("calibrate-amount", "Measured ", "", updateButton);
 	txtCalibrateAmount = getInputFromLabel(field);
-	panel.appendChild(field);
+	row.appendChild(field);
+
+	drpCalibrateUnit = dropdown = makeUnitMenu();
+	row.appendChild(dropdown);
 
 	row = makeRow();
 	panel.appendChild(row);
@@ -79,7 +91,7 @@ function menuCalibrateEnd() {
 
 	btnCalibrateEnd =
 		btn = makeButton("Confirm", "calibrate-confirm-btn", () => {
-			calibrateSubmitActual(new FluidAmount(numberFromTextbox(txtCalibrateAmount)));
+			calibrateSubmitActual(numberFromTextbox(txtCalibrateAmount), getUnitFromAbbreviation(valueFromSelectMenu(drpCalibrateUnit)));
 		});
 	row.appendChild(btn);
 	updateButton();
@@ -88,6 +100,10 @@ function menuCalibrateEnd() {
 	return panel;
 }
 
+let txtFluidWeight;
+let drpFluidName;
+let drpWeightUnit;
+let drpVolumeUnit;
 
 function menuEnterWeightData() {
 	let panelId, panelTitle, promptText;
@@ -103,7 +119,7 @@ function menuEnterWeightData() {
 	row = makeRow();
 	panel.appendChild(row);
 
-	dropdown = makeFluidMenu();
+	drpFluidName = dropdown = makeFluidMenu();
 	label = makeLabel("weigh-fluid", "Fluid to record for: ");
 	label.appendChild(dropdown);
 	row.appendChild(label);
@@ -111,9 +127,15 @@ function menuEnterWeightData() {
 	row = makeRow();
 	panel.appendChild(row);
 
-	field = makeNumField("calibrate-amount", "Measured ", " mL", updateButton);
-	txtCalibrateAmount = getInputFromLabel(field);
-	panel.appendChild(field);
+	field = makeNumField("calibrate-amount", "Amount measured:");
+	txtFluidWeight = getInputFromLabel(field);
+	row.appendChild(field);
+
+	drpWeightUnit = dropdown = makeWeightUnitMenu(FluidUnit.Grams);
+	row.appendChild(dropdown);
+	row.append(" per ");
+	drpVolumeUnit = dropdown = makeVolumeUnitMenu(FluidUnit.Cups);
+	row.appendChild(dropdown);
 
 	row = makeRow();
 	panel.appendChild(row);
@@ -122,9 +144,14 @@ function menuEnterWeightData() {
 	row.appendChild(btn);
 
 	btn = makeButton("Enter Data", "calibrate-start-btn", () => {
+		let myRate = new FluidAmount(
+			numberFromTextbox(txtFluidWeight),
+			getUnitFromAbbreviation(valueFromSelectMenu(drpWeightUnit)),
+			valueFromSelectMenu(drpFluidName)
+		);
+		myRate.RateUnit = getUnitFromAbbreviation(valueFromSelectMenu(drpVolumeUnit));
 
-		calibrateStart(valueFromSelectMenu(dropdown),
-			calibrateDuration = numberFromTextbox(txtCalibrateDuration));
+		recordFluidWeight(myRate);
 	});
 	row.appendChild(btn);
 

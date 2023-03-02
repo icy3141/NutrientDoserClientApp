@@ -1,7 +1,7 @@
 ﻿
 //enum for command types
-CommandType = {
-	/*reserve up to 9 for system functions*/
+const CommandType = {
+	/*reserve 0-9 for system functions*/
 	/// <summary>
 	/// command not recognized
 	/// </summary>
@@ -25,7 +25,9 @@ CommandType = {
 	Reset : 4,
 	ConfigData: 5,
 
-	/*reserve up to 19 for pump functions*/
+	RecordFluidWeight: 6,
+
+	/*reserve 10-19 for pump functions*/
 
 	/// <summary>
 	/// turn a pump on or off
@@ -54,9 +56,9 @@ CommandType = {
 	PumpCalibrateEnd : 14,
 	/// <summary>
 	/// Provide the server with user input about the actual measured quantity.
-	/// args: string fluidName, FluidAmount amountMeasured
+	/// args: FluidAmount amountMeasured, double seconds
 	/// </summary>
-	PumpCalibrateActualVolume : 15,
+	PumpCalibrateActualAmount : 15,
 
 
 	/// <summary>
