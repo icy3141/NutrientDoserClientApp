@@ -34,7 +34,6 @@ function makeConnectionIndicator() {
     connectionIndicatorText.className = "connection-indicator-text";
     connectionIndicatorDiv.appendChild(connectionIndicatorText);
 }
-
 /** Create the UI
  */
 function initUi() {
@@ -45,6 +44,29 @@ function initUi() {
     makeConnectionIndicator();
     showDisconnected();
     /* end connection indicator */
+
+	var btn;
+	btn = makeButton("Prime Pump", "prime-pump-btn", null);
+	let pumpOn = () =>
+	{
+		setPump(true);
+	};
+	let pumpOff = () =>
+	{
+		setPump(false);
+	};
+	btn.ontouchstart = pumpOn;
+	btn.onmousedown = pumpOn;
+	btn.onmouseup = pumpOff;
+	btn.ontouchend = pumpOff;
+	btn.ontouchcancel = pumpOff;
+	document.body.appendChild(btn);
+	btn = makeButton("Toggle Pump", "toggle-pump-btn", () => setPump(!isPumpOn));
+	document.body.appendChild(btn);
+
+	btn = makeButton("Reconnect", "reconnect-btn", connect);
+	btn.style.float = "left";
+	connectionIndicatorDiv.prepend(btn);
 
     loadMenu(menuMain);
 }

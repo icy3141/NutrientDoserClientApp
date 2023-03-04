@@ -117,7 +117,8 @@ function makeButton(text, className, onclick) {
 	let button = document.createElement("button");
 	button.className = className;
 	button.innerText = text;
-	button.onclick = onclick;
+	if(onclick)
+		button.onclick = onclick;
 	return button;
 }
 

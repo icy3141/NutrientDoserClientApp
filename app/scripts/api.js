@@ -16,7 +16,7 @@ let currentRecipe;
 function recordFluidWeight(weightAmount, volumeAmount)
 {
 	let weightRatio = new FluidAmount(weightAmount.Value / volumeAmount.Value, weightAmount.Unit, weightAmount.Name);
-
+	weightRatio.RateUnit = volumeAmount.Unit;
 	
 	let command = new CommandData(CommandType.RecordFluidWeight, weightRatio);
 	command.send();
@@ -132,8 +132,9 @@ function cancelFluid() {
 
 }
 
+let isPumpOn = false;
 function setPump(isOn) {
-
+	isPumpOn = isOn;
 	let command = new CommandData(CommandType.SetPump, isOn);
 	//command.setArguments(isOn);
 	let sendStr = command.toString();

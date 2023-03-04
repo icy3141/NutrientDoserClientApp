@@ -53,27 +53,6 @@ function menuPumpControl() {
 	btnTogglePump = getInputFromLabel(field);
 	row.appendChild(field);
 
-	//btn = makeButton("Off", "pump-off-btn", () => setPump(this.checked));
-	//row.appendChild(btn);
-
-	row = makeRow();
-	panel.appendChild(row);
-
-	field = makeNumField("pump-amount", "Pump volume of ");
-	txtPumpAmount = getInputFromLabel(field);
-	row.appendChild(field);
-
-	drpPumpControlVolumeUnit = dropdown = makeVolumeUnitMenu(FluidUnit.Milliliters);
-	row.appendChild(dropdown);
-
-	btn = makeButton("Go", "pump-amount-btn",
-		() => pumpAmount(new FluidAmount(
-			numberFromTextbox(txtPumpAmount),
-			valueFromSelectMenu(drpPumpControlVolumeUnit)
-		))
-	);
-	row.appendChild(btn);
-
 	row = makeRow();
 	panel.appendChild(row);
 
@@ -92,6 +71,41 @@ function menuPumpControl() {
 		);
 	row.appendChild(btn);
 	updateButton();
+
+	//btn = makeButton("Off", "pump-off-btn", () => setPump(this.checked));
+	//row.appendChild(btn);
+
+	row = makeRow();
+	panel.appendChild(row);
+
+	// drpFluidName = dropdown = makeFluidMenu();
+	// label = makeLabel("select-fluid", "Fluid to pump: ");
+	// label.appendChild(dropdown);
+	// row.appendChild(label);
+
+	drpFluidName = dropdown = makeFluidMenu();
+	label = makeLabel("select-fluid", "Fluid to pump: ");
+	label.appendChild(dropdown);
+	row.appendChild(label);
+
+	row = makeRow();
+	panel.appendChild(row);
+
+	field = makeNumField("pump-amount", "Pump volume of ");
+	txtPumpAmount = getInputFromLabel(field);
+	row.appendChild(field);
+	
+	drpPumpControlVolumeUnit = dropdown = makeVolumeUnitMenu(FluidUnit.Milliliters);
+	row.appendChild(dropdown);
+
+	btn = makeButton("Go", "pump-amount-btn",
+		() => pumpAmount(new FluidAmount(
+			numberFromTextbox(txtPumpAmount),
+			getUnitFromAbbreviation(valueFromSelectMenu(drpPumpControlVolumeUnit)), 
+			valueFromSelectMenu(drpFluidName)
+		))
+	);
+	row.appendChild(btn);
 
 	row = makeRow();
 	panel.appendChild(row);
